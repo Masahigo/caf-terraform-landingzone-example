@@ -85,14 +85,4 @@ pipelines
 
 This folder contains shell and Terraform scripts for creating the Service Principal account (level0-bootstrap-sp) needed for Rover in CI/CD.
 
-```bash
-cd /tf/caf-custom/bootstrap_sp/
-chmod +x ./deploy.sh
-./deploy.sh
-
-# Fetch SP info from Terraform output once it's run through
-ARM_TENANT_ID=$(terraform show -json terraform.tfstate | jq -r .values.outputs.bootstrap_ARM_TENANT_ID.value)
-ARM_SUBSCRIPTION_ID=$(terraform show -json terraform.tfstate | jq -r .values.outputs.bootstrap_ARM_SUBSCRIPTION_ID.value)
-ARM_CLIENT_ID=$(terraform show -json terraform.tfstate | jq -r .values.outputs.bootstrap_ARM_CLIENT_ID.value)
-ARM_CLIENT_SECRET=$(terraform show -json terraform.tfstate | jq -r .values.outputs.bootstrap_ARM_CLIENT_SECRET.value)
-```
+See [the CI/CD instructions](./pipelines/README.MD) for how to set up a pipeline to Azure DevOps.
