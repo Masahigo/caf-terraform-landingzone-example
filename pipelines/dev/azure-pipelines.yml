@@ -50,7 +50,5 @@ steps:
   env:
     TF_VAR_workspace: $(workspace)
 - script: |
-    /tf/rover/rover.sh $(Build.SourcesDirectory)/landingzones/level1_landingzone_example apply -w $(workspace) -var-file="$(Build.SourcesDirectory)/tfvars/$(workspace)/level1_landingzone_example.tfvars"
+    /tf/rover/rover.sh $(Build.SourcesDirectory)/landingzones/level1_landingzone_example apply -w $(workspace) -env $(workspace) -level level1 -var-file="$(Build.SourcesDirectory)/tfvars/$(workspace)/level1_landingzone_example.tfvars"
   displayName: 'Provision example Landing Zone for DEV environment'
-  env:
-    TF_VAR_workspace: $(workspace)
