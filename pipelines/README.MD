@@ -92,3 +92,17 @@ az pipelines variable create --name ARM_CLIENT_SECRET --secret true --value $CLI
 # Trigger new pipeline run manually
 az pipelines run --name $PIPELINE_NAME
 ```
+
+**Clean up**
+
+```bash
+# Remove the resources created through pipeline
+az pipelines run --name $PIPELINE_NAME --variable "DESTROY=true"
+
+# Remove ADO Project
+az devops project delete --id $(az devops project show -p "$AZURE_DEVOPS_PROJECT" --query id -o tsv) -y
+
+# Remove bootstrap SP
+cd /tf/caf-custom/bootstrap_sp/
+terraform destroy --auto-approve
+```
