@@ -1,0 +1,56 @@
+name: "caf_landingzone_example"
+
+variables:
+  location: 'westeurope'
+  workspace: 'dev'
+  
+trigger: none
+  
+pool:
+  vmImage: 'ubuntu-latest'
+  
+container:
+  image: aztfmod/rover:2007.0108
+  options: --user 0 --name rover-container -v /usr/bin/docker:/tmp/docker:ro
+  env:
+    TF_CLI_ARGS: '-no-color'
+    ARM_CLIENT_SECRET: $(ARM_CLIENT_SECRET)
+    ARM_CLIENT_ID: $(ARM_CLIENT_ID)
+    ARM_SUBSCRIPTION_ID: $(ARM_SUBSCRIPTION_ID)
+    ARM_TENANT_ID: $(ARM_TENANT_ID)
+  
+steps:
+- script: |
+    /tmp/docker exec -t -u 0 rover-container \
+    sh -c "yum install -y sudo"
+  displayName: 'Set up sudo'
+- script: |
+    ls -la
+    sudo chmod -R 777 /home/vscode
+    sudo chmod -R 777 /tf/launchpads
+  displayName: 'File permissions'
+- script: |
+    az login --service-principal -u '$(ARM_CLIENT_ID)' -p '$(ARM_CLIENT_SECRET)' --tenant '$(ARM_TENANT_ID)'
+    az account set -s  $(ARM_SUBSCRIPTION_ID)
+
+    export ARM_CLIENT_ID=$(ARM_CLIENT_ID)
+    export ARM_CLIENT_SECRET=$(ARM_CLIENT_SECRET)
+    export ARM_TENANT_ID=$(ARM_TENANT_ID)
+    export ARM_SUBSCRIPTION_ID=$(ARM_SUBSCRIPTION_ID)
+  displayName: 'Login to Azure'
+- script: |
+    id=$(az storage account list --query "[?tags.tfstate=='level0']" -o json | jq -r .[0].id)
+      if [ "${id}" == "null" ]; then
+        /tf/rover/launchpad.sh /tf/launchpads/launchpad_opensource_light apply -var-file="$(Build.SourcesDirectory)/tfvars/$(workspace)/launchpad_opensource_light.tfvars"
+    fi
+  displayName: 'Initialize Launchpad (light) for DEV environment'
+- script: |
+    /tf/rover/launchpad.sh workspace create $(workspace)
+  displayName: 'Create workspace for DEV environment'
+  env:
+    TF_VAR_workspace: $(workspace)
+- script: |
+    /tf/rover/rover.sh $(Build.SourcesDirectory)/landingzones/level1_landingzone_example apply -w $(workspace) -var-file="$(Build.SourcesDirectory)/tfvars/$(workspace)/level1_landingzone_example.tfvars"
+  displayName: 'Provision example Landing Zone for DEV environment'
+  env:
+    TF_VAR_workspace: $(workspace)
