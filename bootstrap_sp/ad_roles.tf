@@ -109,7 +109,10 @@ resource "azurerm_role_definition" "custom_rbac_role" {
       "Microsoft.Authorization/roleAssignments/read",
       "Microsoft.Authorization/roleAssignments/write",
       "Microsoft.Authorization/roleDefinitions/write",
-      "Microsoft.Authorization/roleDefinitions/delete"
+      "Microsoft.Authorization/roleDefinitions/delete",
+      "Microsoft.Authorization/policyAssignments/read",
+      "Microsoft.Authorization/policyAssignments/write",
+      "Microsoft.Authorization/policyAssignments/delete"
     ]
 
   }
