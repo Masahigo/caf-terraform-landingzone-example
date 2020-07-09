@@ -3,6 +3,8 @@
 ## Requirements
 
 - Azure CLI
+- Terraform
+- Git
 - [Azure Devops extension for Azure CLI](https://github.com/Azure/azure-devops-cli-extension)
 - [PAT for Azure DevOps CLI](https://docs.microsoft.com/en-us/azure/devops/organizations/accounts/use-personal-access-tokens-to-authenticate?view=azure-devops&tabs=preview-page#create-personal-access-tokens-to-authenticate-access)
   * `Agent Pools`: Read
@@ -17,7 +19,7 @@
 az extension add --name azure-devops
 ```
 
-__NOTE: Azure CLI is pre-installed in Rover (Dev Container)__
+__NOTE: Azure CLI, Terraform and Git are pre-installed in Rover (Dev Container)__
 
 ## Create the Service Principal for CI/CD
 
