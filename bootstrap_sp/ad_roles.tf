@@ -96,6 +96,35 @@ resource "azurerm_role_assignment" "set_rbac_role" {
   principal_id         = azuread_service_principal.bootstrap.id
 }
 
+# Custom RBAC role 
+
+resource "azurerm_role_definition" "custom_rbac_role" {
+  name        = "custom-role-for-caf-bootstrap-sp"
+  scope       = data.azurerm_subscription.primary.id
+  description = "Provide a least privilege role to the caf boostrap Azure AD application"
+
+  permissions {
+    actions     = [
+      "Microsoft.Authorization/roleAssignments/delete",
+      "Microsoft.Authorization/roleAssignments/read",
+      "Microsoft.Authorization/roleAssignments/write",
+      "Microsoft.Authorization/roleDefinitions/write",
+      "Microsoft.Authorization/roleDefinitions/delete"
+    ]
+
+  }
+
+  assignable_scopes = [
+    data.azurerm_subscription.primary.id,
+  ]
+}
+
+resource "azurerm_role_assignment" "set_custom_rbac_role" {
+  scope                = data.azurerm_subscription.primary.id
+  role_definition_id   = azurerm_role_definition.custom_rbac_role.id
+  principal_id         = azuread_service_principal.bootstrap.object_id
+}
+
 # Wait for the Service Principal to be replicated, otherwise we might get
 # 404 or 401 responses because the SP is not replicated yet across Azure
 resource "null_resource" "ready_delay" {
@@ -104,6 +133,7 @@ resource "null_resource" "ready_delay" {
   }
   depends_on = [
     azurerm_role_assignment.set_rbac_role,
+    azurerm_role_assignment.set_custom_rbac_role,
   ]
 }
 
