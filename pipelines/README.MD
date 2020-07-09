@@ -50,8 +50,8 @@ az devops login
 AZURE_DEVOPS_ORGANIZATION='<your-azure-devops-organization>'
 AZURE_DEVOPS_ACCOUNT='https://dev.azure.com/<your-azure-devops-organization>/'
 AZURE_DEVOPS_PROJECT='testing-caf-landingzones'
-az devops configure --defaults organization="$AZURE_DEVOPS_ACCOUNT"
-az devops configure --defaults project="$AZURE_DEVOPS_PROJECT"
+
+az devops configure --defaults organization="$AZURE_DEVOPS_ACCOUNT" project="$AZURE_DEVOPS_PROJECT"
 
 # Create new Project to ADO
 az devops project create --name "$AZURE_DEVOPS_PROJECT" --org "$AZURE_DEVOPS_ACCOUNT"
