@@ -54,10 +54,10 @@ AZURE_DEVOPS_PROJECT='testing-caf-landingzones'
 az devops configure --defaults organization="$AZURE_DEVOPS_ACCOUNT" project="$AZURE_DEVOPS_PROJECT"
 
 # Create new Project to ADO
-az devops project create --name "$AZURE_DEVOPS_PROJECT" --org "$AZURE_DEVOPS_ACCOUNT"
+az devops project create --name "$AZURE_DEVOPS_PROJECT"
 
 # Import this repo to ADO Project's default git repo
-az repos import create --git-url https://github.com/Masahigo/caf-terraform-landingzone-example.git --org "$AZURE_DEVOPS_ACCOUNT" --project "$AZURE_DEVOPS_PROJECT" --repository "$AZURE_DEVOPS_PROJECT"
+az repos import create --git-url https://github.com/Masahigo/caf-terraform-landingzone-example.git --repository "$AZURE_DEVOPS_PROJECT"
 
 # Paste PAT (2. time)
 AZURE_DEVOPS_PAT=<your-PAT>
