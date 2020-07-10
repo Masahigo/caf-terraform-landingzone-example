@@ -35,6 +35,14 @@ SUBSCRIPTION_ID=$(terraform show -json terraform.tfstate | jq -r .values.outputs
 TENANT_ID=$(terraform show -json terraform.tfstate | jq -r .values.outputs.bootstrap_ARM_TENANT_ID.value)
 ```
 
+ **Notes: This bootstrap script creates**
+ - Service Principal with Contributor role on subscription level (RBAC)
+ - Assigns the Azure AD Application Developer role for the SP
+ - Gives a bunch of API permissions and grants those
+ - Creates also a custom RBAC role scoped to your Azure subscription for some more fine grained RBAC permissions needed for provisioning the Launchpad's resources as well as the LZ (modify policies)
+ 
+ **why?** so that we don't have to grant it _Owner_ permissions to subscription level
+
 ## Configure Azure Pipeline
 
 *From Rover (Dev Container)*
