@@ -56,7 +56,7 @@ steps:
   displayName: 'Provision example Landing Zone for DEV environment'
   condition: and(succeeded(), ne(variables.DESTROY , 'true'))
 - script: |
-    /tf/rover/rover.sh $(Build.SourcesDirectory)/landingzones/level1_landingzone_example destroy -w $(workspace) -env $(workspace) -level level1 -var-file="$(Build.SourcesDirectory)/tfvars/$(workspace)/level1_landingzone_example.tfvars" --auto-approve
-    /tf/rover/launchpad.sh /tf/launchpads/launchpad_opensource_light destroy -var-file="$(Build.SourcesDirectory)/tfvars/$(workspace)/launchpad_opensource_light.tfvars" --auto-approve
+    /tf/rover/rover.sh $(Build.SourcesDirectory)/landingzones/level1_landingzone_example destroy -w $(workspace) -env $(workspace) -level level1 -var-file="$(Build.SourcesDirectory)/tfvars/$(workspace)/level1_landingzone_example.tfvars" -auto-approve
+    /tf/rover/launchpad.sh /tf/launchpads/launchpad_opensource_light destroy -var-file="$(Build.SourcesDirectory)/tfvars/$(workspace)/launchpad_opensource_light.tfvars" -auto-approve
   displayName: 'Clean up resources'
   condition: and(succeeded(), eq(variables.DESTROY , 'true'))

@@ -112,5 +112,5 @@ az devops project delete --id $(az devops project show -p "$AZURE_DEVOPS_PROJECT
 
 # Remove bootstrap SP
 cd /tf/caf-custom/bootstrap_sp/
-terraform destroy --auto-approve
+terraform destroy -auto-approve
 ```

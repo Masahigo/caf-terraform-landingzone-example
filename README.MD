@@ -46,7 +46,7 @@ We are using a tool called Rover. It's Dockerized and local development is done 
 # Deploy the Level 1 example LZ using Rover
 [vscode@e1d53c1ca8ae ~]$ rover /tf/caf-custom/landingzones/level1_landingzone_example plan -var-file="/tf/caf-custom/tfvars/sandpit/level1_landingzone_example.tfvars"
 [vscode@e1d53c1ca8ae ~]$ rover /tf/caf-custom/landingzones/level1_landingzone_example apply -var-file="/tf/caf-custom/tfvars/sandpit/level1_landingzone_example.tfvars"
-[vscode@e1d53c1ca8ae ~]$ rover /tf/caf-custom/landingzones/level1_landingzone_example destroy -var-file="/tf/caf-custom/tfvars/sandpit/level1_landingzone_example.tfvars" --auto-approve
+[vscode@e1d53c1ca8ae ~]$ rover /tf/caf-custom/landingzones/level1_landingzone_example destroy -var-file="/tf/caf-custom/tfvars/sandpit/level1_landingzone_example.tfvars" -auto-approve
 ```
 
 # File structure
